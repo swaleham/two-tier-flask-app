@@ -1,9 +1,8 @@
 version: '3'
 services:
   
-  backend:
-    build:
-      context: .
+ backend:
+    image: swaleha6/flaskapp:latest
     ports:
       - "5000:5000"
     environment:
@@ -11,19 +10,22 @@ services:
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin
       MYSQL_DB: myDb
+
     depends_on:
       - mysql
 
   mysql:
     image: mysql:5.7
+    ports: "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: myDb
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin
+
     volumes:
-      - ./message.sql:/docker-entrypoint-initdb.d/message.sql   
-      - mysql-data:/var/lib/mysql
+      - ./message.sql:/docker-entrypoint-initdb.d/message.sql  
+      - mysql-data:/var/lib/mysql  
 
 volumes:
   mysql-data:
